@@ -3,7 +3,7 @@ import axios from 'axios';
 // IMPORTANT: Set VITE_API_URL in your frontend environment variables to the deployed backend URL (e.g., https://your-backend.onrender.com)
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 10000,
+  timeout: 15000,
 });
 
 // Request interceptor to add auth token

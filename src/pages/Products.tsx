@@ -99,11 +99,11 @@ const Products: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-8 min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
             Software Products
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
@@ -112,17 +112,17 @@ const Products: React.FC = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm mb-8">
-          <div className="grid md:grid-cols-4 gap-4">
+        <div className="p-6 mb-8 bg-white rounded-xl shadow-sm dark:bg-gray-800">
+          <div className="grid gap-4 md:grid-cols-4">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Search className="absolute left-3 top-1/2 w-5 h-5 text-gray-400 transform -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search products..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                className="py-2 pr-4 pl-10 w-full text-gray-900 bg-white rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
               />
             </div>
 
@@ -130,7 +130,7 @@ const Products: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="px-4 py-2 text-gray-900 bg-white rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             >
               {categories.map(category => (
                 <option key={category.value} value={category.value}>
@@ -143,7 +143,7 @@ const Products: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="px-4 py-2 text-gray-900 bg-white rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
             >
               {sortOptions.map(option => (
                 <option key={option.value} value={option.value}>
@@ -160,9 +160,9 @@ const Products: React.FC = () => {
                 setSortBy('-createdAt');
                 setCurrentPage(1);
               }}
-              className="flex items-center justify-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="flex justify-center items-center px-4 py-2 space-x-2 text-gray-700 bg-gray-100 rounded-lg transition-colors dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
             >
-              <Filter className="h-4 w-4" />
+              <Filter className="w-4 h-4" />
               <span>Clear</span>
             </button>
           </div>
@@ -170,56 +170,56 @@ const Products: React.FC = () => {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 animate-pulse">
-                <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+              <div key={i} className="p-6 bg-white rounded-xl shadow-sm animate-pulse dark:bg-gray-800">
+                <div className="mb-4 w-full h-48 bg-gray-200 rounded-lg dark:bg-gray-700"></div>
+                <div className="mb-2 h-4 bg-gray-200 rounded dark:bg-gray-700"></div>
+                <div className="w-3/4 h-4 bg-gray-200 rounded dark:bg-gray-700"></div>
               </div>
             ))}
           </div>
         ) : (
           <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {products.map((product) => (
                 <Link
                   key={product._id}
                   to={`/products/${product._id}`}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group block"
+                  className="block bg-white rounded-xl shadow-sm transition-all duration-300 transform dark:bg-gray-800 hover:shadow-lg hover:-translate-y-1 group"
                   style={{ textDecoration: 'none' }}
                 >
-                  <div className="relative overflow-hidden rounded-t-xl">
+                  <div className="overflow-hidden relative rounded-t-xl">
                     <img
                       src={product.images[0]?.url || `https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=400`}
                       alt={product.name}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className="absolute top-4 right-4">
-                      <span className="bg-sky-600 text-white px-2 py-1 rounded-full text-sm font-medium">
+                      <span className="px-2 py-1 text-sm font-medium text-white bg-sky-600 rounded-full">
                         {product.category}
                       </span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+                    <h3 className="mb-2 text-lg font-semibold text-gray-900 transition-colors dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400">
                       {product.name}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
+                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                       {product.description}
                     </p>
-                    <div className="flex items-center space-x-1 mb-3">
+                    <div className="flex items-center mb-3 space-x-1">
                       {renderStars(Math.round(product.rating.average))}
-                      <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">
+                      <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">
                         ({product.rating.count})
                       </span>
                     </div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex justify-between items-center mb-4">
                       <span className="text-2xl font-bold text-sky-600 dark:text-sky-400">
                         ${product.price}
                       </span>
                       <div className="flex items-center space-x-1 text-gray-500 dark:text-gray-400">
-                        <Download className="h-4 w-4" />
+                        <Download className="w-4 h-4" />
                         <span className="text-sm">{product.downloads}</span>
                       </div>
                     </div>
@@ -228,9 +228,9 @@ const Products: React.FC = () => {
                         e.preventDefault();
                         handleAddToCart(product);
                       }}
-                      className="w-full bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+                      className="flex justify-center items-center px-4 py-2 space-x-2 w-full font-medium text-white bg-sky-600 rounded-lg transition-colors hover:bg-sky-700"
                     >
-                      <ShoppingCart className="h-4 w-4" />
+                      <ShoppingCart className="w-4 h-4" />
                       <span>Add to Cart</span>
                     </button>
                   </div>
@@ -263,11 +263,11 @@ const Products: React.FC = () => {
 
         {/* No Results */}
         {!loading && products.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 dark:text-gray-600 mb-4">
-              <Search className="h-16 w-16 mx-auto" />
+          <div className="py-12 text-center">
+            <div className="mb-4 text-gray-400 dark:text-gray-600">
+              <Search className="mx-auto w-16 h-16" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
               No products found
             </h3>
             <p className="text-gray-600 dark:text-gray-300">

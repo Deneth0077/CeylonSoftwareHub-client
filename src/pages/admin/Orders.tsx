@@ -8,7 +8,8 @@ import {
   CheckCircle,
   XCircle,
   Package,
-  DollarSign
+  DollarSign,
+  Trash2
 } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -83,11 +84,19 @@ const AdminOrders: React.FC = () => {
     }
   };
 
+  const handleDeleteOrder = async (orderId: string) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return;
+    try {
+      await axios.delete(`/api/orders/${orderId}`);
+      toast.success('Order deleted successfully');
+      fetchOrders();
+    } catch (error) {
+      toast.error('Failed to delete order');
+    }
+  };
+
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
+    return `Rs ${amount.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
 
   const getStatusColor = (status: string) => {
@@ -269,6 +278,13 @@ const AdminOrders: React.FC = () => {
                           title="View Details"
                         >
                           <Eye className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteOrder(order._id)}
+                          className="p-2 text-red-500 hover:text-red-700 transition-colors"
+                          title="Delete Order"
+                        >
+                          <Trash2 className="h-4 w-4" />
                         </button>
                       </td>
                     </tr>

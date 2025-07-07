@@ -52,6 +52,8 @@ const Profile: React.FC = () => {
     setLoading(false);
   };
 
+  const isGoogleUser = user?.googleId;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,11 +72,19 @@ const Profile: React.FC = () => {
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
               <div className="p-6">
                 <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-12 h-12 bg-sky-100 dark:bg-sky-900/20 rounded-full flex items-center justify-center">
-                    <span className="text-sky-600 dark:text-sky-400 font-bold text-lg">
-                      {user?.name.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
+                  {user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 bg-sky-100 dark:bg-sky-900/20 rounded-full flex items-center justify-center">
+                      <span className="text-sky-600 dark:text-sky-400 font-bold text-lg">
+                        {user?.name.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white">
                       {user?.name}
@@ -82,6 +92,11 @@ const Profile: React.FC = () => {
                     <p className="text-sm text-gray-500 dark:text-gray-400">
                       {user?.email}
                     </p>
+                    {isGoogleUser && (
+                      <span className="inline-flex items-center px-2 py-1 mt-1 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 rounded-full">
+                        Google Account
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -100,20 +115,30 @@ const Profile: React.FC = () => {
                     </div>
                   </button>
                   
-                  <button
-                    onClick={() => setActiveTab('password')}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                      activeTab === 'password'
-                        ? 'bg-sky-100 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <Lock className="h-4 w-4" />
-                      <span>Password</span>
-                    </div>
-                  </button>
+                  {!isGoogleUser && (
+                    <button
+                      onClick={() => setActiveTab('password')}
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        activeTab === 'password'
+                          ? 'bg-sky-100 dark:bg-sky-900/20 text-sky-600 dark:text-sky-400'
+                          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Lock className="h-4 w-4" />
+                        <span>Password</span>
+                      </div>
+                    </button>
+                  )}
                 </nav>
+
+                {isGoogleUser && (
+                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <p className="text-sm text-blue-700 dark:text-blue-400">
+                      This account is linked to Google. Password changes are managed through your Google account.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -274,21 +299,15 @@ const Profile: React.FC = () => {
                       disabled={loading}
                       className="bg-sky-600 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
                     >
-                      {loading ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      ) : (
-                        <>
-                          <Save className="h-4 w-4" />
-                          <span>Save Changes</span>
-                        </>
-                      )}
+                      <Save className="h-4 w-4" />
+                      <span>{loading ? 'Saving...' : 'Save Changes'}</span>
                     </button>
                   </div>
                 </form>
               </div>
             )}
 
-            {activeTab === 'password' && (
+            {activeTab === 'password' && !isGoogleUser && (
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -304,39 +323,45 @@ const Profile: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Current Password
                     </label>
-                    <input
-                      type="password"
-                      value={passwordData.currentPassword}
-                      onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-                      required
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <input
+                        type="password"
+                        value={passwordData.currentPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       New Password
                     </label>
-                    <input
-                      type="password"
-                      value={passwordData.newPassword}
-                      onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-                      required
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <input
+                        type="password"
+                        value={passwordData.newPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Confirm New Password
                     </label>
-                    <input
-                      type="password"
-                      value={passwordData.confirmPassword}
-                      onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-                      required
-                    />
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <input
+                        type="password"
+                        value={passwordData.confirmPassword}
+                        onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex justify-end">
@@ -345,14 +370,8 @@ const Profile: React.FC = () => {
                       disabled={loading}
                       className="bg-sky-600 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
                     >
-                      {loading ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      ) : (
-                        <>
-                          <Lock className="h-4 w-4" />
-                          <span>Update Password</span>
-                        </>
-                      )}
+                      <Save className="h-4 w-4" />
+                      <span>{loading ? 'Updating...' : 'Update Password'}</span>
                     </button>
                   </div>
                 </form>

@@ -49,6 +49,9 @@ const ProductDetail: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const { addItem } = useCart();
   const navigate = useNavigate();
+  const [submittingRating, setSubmittingRating] = useState(false);
+  const [userRating, setUserRating] = useState<number | null>(null);
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -60,8 +63,7 @@ const ProductDetail: React.FC = () => {
     try {
       const response = await axios.get(`/api/products/${id}`);
       setProduct(response.data);
-    } catch (error) {
-      console.error('Error fetching product:', error);
+    } catch {
       toast.error('Product not found');
     } finally {
       setLoading(false);
@@ -94,17 +96,19 @@ const ProductDetail: React.FC = () => {
     }
   };
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-5 w-5 ${
-          i < rating 
-            ? 'text-yellow-400 fill-current' 
-            : 'text-gray-300 dark:text-gray-600'
-        }`}
-      />
-    ));
+  const submitRating = async (rating: number) => {
+    if (!id) return;
+    setSubmittingRating(true);
+    try {
+      const response = await axios.post(`/api/products/${id}/rate`, { rating });
+      setProduct(response.data); // Assume updated product returned
+      setUserRating(rating);
+      toast.success('Thank you for your rating!');
+    } catch (error) {
+      toast.error('Failed to submit rating');
+    } finally {
+      setSubmittingRating(false);
+    }
   };
 
   if (loading) {
@@ -196,11 +200,30 @@ const ProductDetail: React.FC = () => {
               </h1>
               
               <div className="flex items-center mb-4 space-x-4">
-                <div className="flex items-center space-x-1">
-                  {renderStars(Math.round(product.rating.average))}
-                  <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                    ({product.rating.count} reviews)
-                  </span>
+                <div className="flex items-center ml-0">
+                  <span className="mr-2 text-sm text-gray-500 dark:text-gray-400">Your Rating:</span>
+                  {[1,2,3,4,5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      disabled={submittingRating}
+                      onClick={() => submitRating(star)}
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(null)}
+                      className="focus:outline-none"
+                    >
+                      <Star
+                        className={`h-5 w-5 transition-colors ${
+                          (hoverRating ?? userRating ?? 0) >= star
+                            ? 'text-yellow-400 fill-current'
+                            : 'text-gray-300 dark:text-gray-600'
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  {submittingRating && (
+                    <span className="ml-2 text-xs text-gray-400">Submitting...</span>
+                  )}
                 </div>
                 <div className="flex items-center space-x-1 text-gray-500 dark:text-gray-400">
                   <Download className="w-4 h-4" />

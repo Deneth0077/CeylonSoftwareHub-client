@@ -6,7 +6,7 @@ interface User {
   _id: string;
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   role: 'user' | 'admin';
   address?: {
     street?: string;
@@ -16,6 +16,7 @@ interface User {
     country?: string;
   };
   avatar?: string;
+  googleId?: string;
   createdAt: string;
 }
 
@@ -24,6 +25,7 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   login: (emailOrPhone: string, password: string) => Promise<void>;
+  loginWithGoogle: (token: string) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   updateProfile: (userData: Partial<User>) => Promise<void>;
@@ -104,6 +106,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async (googleToken: string) => {
+    try {
+      const response = await axios.post('/api/auth/google', {
+        token: googleToken
+      });
+
+      const { token: newToken, user: userData } = response.data;
+      
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      setUser(userData);
+      
+      toast.success('Google login successful!');
+    } catch (error: any) {
+      const message = error.response?.data?.message || 'Google login failed';
+      toast.error(message);
+      throw error;
+    }
+  };
+
   const register = async (userData: RegisterData) => {
     try {
       const response = await axios.post('/api/auth/register', userData);
@@ -147,6 +169,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     token,
     loading,
     login,
+    loginWithGoogle,
     register,
     logout,
     updateProfile

@@ -216,7 +216,7 @@ const Products: React.FC = () => {
                     </div>
                     <div className="flex justify-between items-center mb-4">
                       <span className="text-2xl font-bold text-sky-600 dark:text-sky-400">
-                        ${product.price}
+                        Rs {product.price.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                       <div className="flex items-center space-x-1 text-gray-500 dark:text-gray-400">
                         <Download className="w-4 h-4" />

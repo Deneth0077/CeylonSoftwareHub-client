@@ -135,6 +135,12 @@ const Checkout: React.FC = () => {
     }
   };
 
+  // Compose WhatsApp message with user and product details
+  const productName = checkoutItems && checkoutItems.length > 0 ? checkoutItems[0].name : '';
+  const whatsappMessage = encodeURIComponent(
+    `Hello, I am sending my payment slip for my order.\nName: ${customerInfo.name}\nEmail: ${customerInfo.email}\nProduct: ${productName}`
+  );
+
   return (
     <div className="py-8 min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="px-4 mx-auto max-w-4xl sm:px-6 lg:px-8">
@@ -150,37 +156,17 @@ const Checkout: React.FC = () => {
         {/* Slip Upload Section for Bank Transfer */}
         {showSlipUpload && newOrderId && (
           <div className="p-6 mb-8 bg-blue-50 rounded-xl border border-blue-200 dark:bg-blue-900/20 dark:border-blue-700">
-            <div className="flex flex-col items-center p-4 mb-4 bg-white rounded-lg border-2 border-sky-400 border-dashed dark:bg-gray-800">
-              <h3 className="mb-2 text-lg font-semibold text-sky-700 dark:text-sky-300">Upload Payment Slip (Image or PDF)</h3>
-              <input
-                type="file"
-                accept="image/*,application/pdf"
-                id="slip-upload-input"
-                className="hidden"
-                onChange={e => {
-                  const file = e.target.files?.[0];
-                  if (file) handleCloudinarySlipUpload(file);
-                }}
-              />
-              <label htmlFor="slip-upload-input" className="px-4 py-2 mb-2 text-sm font-medium text-white bg-sky-600 rounded-lg transition-colors cursor-pointer hover:bg-sky-700">
-                {slipUploading ? `Uploading... (${slipUploadProgress}%)` : 'Upload Slip (Image or PDF)'}
-              </label>
-              {slipUrl && (
-                <div className="mt-4">
-                  {slipUrl.endsWith('.pdf') ? (
-                    <a href={slipUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">View Uploaded PDF</a>
-                  ) : (
-                    <img src={slipUrl} alt="Payment Slip" className="object-cover w-40 h-28 rounded-lg border" />
-                  )}
-                  <p className="mt-2 font-medium text-green-600 dark:text-green-400">Slip uploaded! You can now leave this page.</p>
-                  <button
-                    className="px-4 py-2 mt-4 text-sm font-medium text-white bg-sky-600 rounded-lg transition-colors hover:bg-sky-700"
-                    onClick={() => navigate('/orders')}
-                  >
-                    Go to My Orders
-                  </button>
-                </div>
-              )}
+            <div className="mb-4 p-4 border-2 border-dashed border-sky-400 bg-white dark:bg-gray-800 rounded-lg flex flex-col items-center">
+              <h3 className="text-lg font-semibold text-sky-700 dark:text-sky-300 mb-2">Upload Payment Slip (Image or PDF)</h3>
+              <a
+                href={`https://wa.me/94776309128?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 mb-2 text-base font-semibold text-white bg-sky-600 rounded-lg transition-colors cursor-pointer hover:bg-sky-700"
+              >
+                Upload Slip (Image or PDF)
+              </a>
+              <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">Click the button above to send your payment slip via WhatsApp.</p>
             </div>
           </div>
         )}

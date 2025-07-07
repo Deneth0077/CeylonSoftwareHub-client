@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Shield } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login: React.FC = () => {
@@ -11,11 +12,15 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
   const from = location.state?.from?.pathname || '/';
+
+  // Debug logging
+  console.log('Login component loaded');
+  console.log('Google Client ID from env:', import.meta.env.VITE_GOOGLE_CLIENT_ID);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,6 +41,21 @@ const Login: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    console.log('Google OAuth Success:', credentialResponse);
+    try {
+      await loginWithGoogle(credentialResponse.credential);
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error('Google login error:', error);
+      // Error is handled in AuthContext
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.error('Google Login Failed');
   };
 
   return (
@@ -121,6 +141,32 @@ const Login: React.FC = () => {
               'Sign in'
             )}
           </button>
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          {/* Google Login Button */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap
+              theme="outline"
+              size="large"
+              text="continue_with"
+              shape="rectangular"
+              width="100%"
+            />
+          </div>
 
           <div className="text-center">
             <span className="text-gray-600 dark:text-gray-300">

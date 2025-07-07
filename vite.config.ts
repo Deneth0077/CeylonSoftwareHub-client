@@ -20,9 +20,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ceylon-software-hub-server.vercel.app/',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },
   },
 });
+
+// http://localhost:5000
+
+// https://ceylon-software-hub-server.vercel.app/

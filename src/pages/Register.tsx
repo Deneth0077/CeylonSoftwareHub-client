@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, Lock, Eye, EyeOff, Shield } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../contexts/AuthContext';
 
 const Register: React.FC = () => {
@@ -15,7 +16,7 @@ const Register: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,19 @@ const Register: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      await loginWithGoogle(credentialResponse.credential);
+      navigate('/');
+    } catch (error) {
+      // Error is handled in AuthContext
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.log('Google Registration Failed');
   };
 
   return (
@@ -188,6 +202,32 @@ const Register: React.FC = () => {
               'Create Account'
             )}
           </button>
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          {/* Google Registration Button */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap
+              theme="outline"
+              size="large"
+              text="signup_with"
+              shape="rectangular"
+              width="100%"
+            />
+          </div>
 
           <div className="text-center">
             <span className="text-gray-600 dark:text-gray-300">

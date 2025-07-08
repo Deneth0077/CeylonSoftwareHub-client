@@ -46,7 +46,7 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <CartProvider>
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+            <div className="min-h-screen bg-gray-50 transition-colors duration-300 dark:bg-gray-900">
               <Navbar />
               <main className="flex-1">
                 <Routes>
@@ -112,12 +112,12 @@ function App() {
               </main>
               <Footer />
               <Toaster
-                position="top-right"
+                position="top-center"
                 toastOptions={{
                   duration: 4000,
                   style: {
-                    background: 'var(--toast-bg)',
-                    color: 'var(--toast-color)',
+                    background: '#323232',
+                    color: '#fff',
                   },
                   className: 'dark:bg-gray-800 dark:text-white',
                 }}

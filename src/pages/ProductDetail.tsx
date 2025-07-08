@@ -154,11 +154,11 @@ const ProductDetail: React.FC = () => {
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="overflow-hidden bg-white rounded-xl shadow-sm aspect-square dark:bg-gray-800">
+            <div className="overflow-hidden bg-white rounded-xl shadow-sm dark:bg-gray-800">
               <img
                 src={product.images[selectedImage]?.url || `https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=800`}
                 alt={product.name}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-64 sm:h-80 md:h-96 lg:h-[600px]"
               />
             </div>
             
@@ -240,9 +240,16 @@ const ProductDetail: React.FC = () => {
                 </div>
               </div>
 
-              <p className="leading-relaxed text-gray-600 dark:text-gray-300">
-                {product.description}
-              </p>
+              {/* Description with support for paragraphs and points, reduced gap */}
+              <div className="leading-relaxed text-gray-600 dark:text-gray-300 space-y-0.2">
+                {product.description.split('\n').map((line, idx) =>
+                  line.trim().startsWith('-') ? (
+                    <li key={idx} className="ml-6 list-disc">{line.replace(/^-\s*/, '')}</li>
+                  ) : line.trim() !== '' ? (
+                    <p key={idx}>{line}</p>
+                  ) : null
+                )}
+              </div>
             </div>
 
             {/* Price and Purchase */}

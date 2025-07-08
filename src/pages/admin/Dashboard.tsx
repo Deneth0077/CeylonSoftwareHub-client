@@ -121,6 +121,13 @@ const AdminDashboard: React.FC = () => {
             <span className="font-medium">Add Product</span>
           </Link>
           <Link
+            to="/admin/products"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-xl transition-colors flex items-center space-x-3"
+          >
+            <Package className="h-6 w-6" />
+            <span className="font-medium">Manage Product</span>
+          </Link>
+          <Link
             to="/admin/orders"
             className="bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-xl transition-colors flex items-center space-x-3"
           >

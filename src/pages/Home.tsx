@@ -91,7 +91,8 @@ const Home: React.FC = () => {
           <h2 className="mb-10 text-3xl font-bold text-left text-gray-900 md:text-4xl dark:text-white">
             Shop By Categories
           </h2>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          
+          <div className="grid grid-cols-2 gap-6 h-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {/* Software & Apps */}
             <div className="flex flex-col items-center">
               <Link to="/products?category=software%20&%20apps" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">

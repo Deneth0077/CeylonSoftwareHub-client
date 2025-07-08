@@ -6,6 +6,17 @@ const api = axios.create({
   timeout: 15000,
 });
 
+// DEBUG: To find your request URI, you can:
+// 1. Open browser DevTools (F12), go to the Network tab, and inspect the Request URL of API calls.
+// 2. See the console log below, which prints every request's full URL.
+
+api.interceptors.request.use(config => {
+  // This will log the full request URL to the browser console
+  const fullUrl = (config.baseURL || '') + (config.url || '');
+  console.log('[API DEBUG] Requesting:', fullUrl);
+  return config;
+});
+
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {

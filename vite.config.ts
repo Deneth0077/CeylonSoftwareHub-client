@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ceylon-software-hub-server.vercel.app/'
+        target: 'https://ceylon-software-hub-server.vercel.app'
         ,
         changeOrigin: true,
       },

@@ -75,7 +75,7 @@ const AdminProducts: React.FC = () => {
     name: '',
     description: '',
     price: 0,
-    category: 'productivity',
+    category: 'software & apps',
     downloadUrl: '',
     systemRequirements: {
       os: [],
@@ -92,12 +92,11 @@ const AdminProducts: React.FC = () => {
 
   const categories = [
     { value: 'all', label: 'All Categories' },
-    { value: 'productivity', label: 'Productivity' },
-    { value: 'development', label: 'Development' },
-    { value: 'design', label: 'Design' },
-    { value: 'security', label: 'Security' },
-    { value: 'games', label: 'Games' },
-    { value: 'utility', label: 'Utility' }
+    { value: 'software & apps', label: 'Software & Apps' },
+    { value: 'MS office keys', label: 'MS Office Keys' },
+    { value: 'Windows Keys', label: 'Windows Keys' },
+    { value: 'PC games', label: 'PC Games' },
+    { value: 'Cracked', label: 'Cracked' }
   ];
 
   useEffect(() => {
@@ -164,7 +163,7 @@ const AdminProducts: React.FC = () => {
       name: '',
       description: '',
       price: 0,
-      category: 'productivity',
+      category: 'software & apps',
       downloadUrl: '',
       systemRequirements: {
         os: [],

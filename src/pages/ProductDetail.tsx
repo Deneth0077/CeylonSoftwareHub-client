@@ -104,7 +104,7 @@ const ProductDetail: React.FC = () => {
       setProduct(response.data); // Assume updated product returned
       setUserRating(rating);
       toast.success('Thank you for your rating!');
-    } catch (error) {
+    } catch {
       toast.error('Failed to submit rating');
     } finally {
       setSubmittingRating(false);

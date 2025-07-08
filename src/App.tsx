@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { CartProvider } from './contexts/CartContext';
@@ -42,98 +41,92 @@ function App() {
   console.log('Google Client ID:', googleClientId);
   console.log('All environment variables:', import.meta.env);
 
-  if (!googleClientId) {
-    console.error('Google Client ID is missing! Please check your .env file.');
-  }
-
   return (
-    <GoogleOAuthProvider clientId={googleClientId || ''}>
-      <Router>
-        <ThemeProvider>
-          <AuthProvider>
-            <CartProvider>
-              <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-                <Navbar />
-                <main className="flex-1">
-                  <Routes>
-                    {/* Public Routes */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/products/:id" element={<ProductDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/about" element={<About />} />
-                    
-                    {/* Protected Routes */}
-                    <Route path="/checkout" element={
-                      <ProtectedRoute>
-                        <Checkout />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/profile" element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/orders" element={
-                      <ProtectedRoute>
-                        <Orders />
-                      </ProtectedRoute>
-                    } />
-                    
-                    {/* Admin Routes */}
-                    <Route path="/admin" element={
-                      <AdminRoute>
-                        <AdminDashboard />
-                      </AdminRoute>
-                    } />
-                    <Route path="/admin/products" element={
-                      <AdminRoute>
-                        <AdminProducts />
-                      </AdminRoute>
-                    } />
-                    <Route path="/admin/products/add" element={
-                      <AdminRoute>
-                        <AddProduct />
-                      </AdminRoute>
-                    } />
-                    <Route path="/admin/orders" element={
-                      <AdminRoute>
-                        <AdminOrders />
-                      </AdminRoute>
-                    } />
-                    <Route path="/admin/users" element={
-                      <AdminRoute>
-                        <AdminUsers />
-                      </AdminRoute>
-                    } />
-                    <Route path="/admin/payment-slips" element={
-                      <AdminRoute>
-                        <PaymentSlips />
-                      </AdminRoute>
-                    } />
-                  </Routes>
-                </main>
-                <Footer />
-                <Toaster
-                  position="top-right"
-                  toastOptions={{
-                    duration: 4000,
-                    style: {
-                      background: 'var(--toast-bg)',
-                      color: 'var(--toast-color)',
-                    },
-                    className: 'dark:bg-gray-800 dark:text-white',
-                  }}
-                />
-              </div>
-            </CartProvider>
-          </AuthProvider>
-        </ThemeProvider>
-      </Router>
-    </GoogleOAuthProvider>
+    <Router>
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+              <Navbar />
+              <main className="flex-1">
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/:id" element={<ProductDetail />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/about" element={<About />} />
+                  
+                  {/* Protected Routes */}
+                  <Route path="/checkout" element={
+                    <ProtectedRoute>
+                      <Checkout />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/profile" element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/orders" element={
+                    <ProtectedRoute>
+                      <Orders />
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin" element={
+                    <AdminRoute>
+                      <AdminDashboard />
+                    </AdminRoute>
+                  } />
+                  <Route path="/admin/products" element={
+                    <AdminRoute>
+                      <AdminProducts />
+                    </AdminRoute>
+                  } />
+                  <Route path="/admin/products/add" element={
+                    <AdminRoute>
+                      <AddProduct />
+                    </AdminRoute>
+                  } />
+                  <Route path="/admin/orders" element={
+                    <AdminRoute>
+                      <AdminOrders />
+                    </AdminRoute>
+                  } />
+                  <Route path="/admin/users" element={
+                    <AdminRoute>
+                      <AdminUsers />
+                    </AdminRoute>
+                  } />
+                  <Route path="/admin/payment-slips" element={
+                    <AdminRoute>
+                      <PaymentSlips />
+                    </AdminRoute>
+                  } />
+                </Routes>
+              </main>
+              <Footer />
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: 'var(--toast-bg)',
+                    color: 'var(--toast-color)',
+                  },
+                  className: 'dark:bg-gray-800 dark:text-white',
+                }}
+              />
+            </div>
+          </CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </Router>
   );
 }
 

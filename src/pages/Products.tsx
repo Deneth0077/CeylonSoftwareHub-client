@@ -31,12 +31,11 @@ const Products: React.FC = () => {
 
   const categories = [
     { value: 'all', label: 'All Categories' },
-    { value: 'productivity', label: 'Productivity' },
-    { value: 'development', label: 'Development' },
-    { value: 'design', label: 'Design' },
-    { value: 'security', label: 'Security' },
-    { value: 'games', label: 'Games' },
-    { value: 'utility', label: 'Utility' }
+    { value: 'software & apps', label: 'Software & Apps' },
+    { value: 'MS office keys', label: 'MS Office Keys' },
+    { value: 'Windows Keys', label: 'Windows Keys' },
+    { value: 'PC games', label: 'PC Games' },
+    { value: 'Cracked', label: 'Cracked' }
   ];
 
   const sortOptions = [

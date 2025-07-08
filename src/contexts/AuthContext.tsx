@@ -25,7 +25,6 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   login: (emailOrPhone: string, password: string) => Promise<void>;
-  loginWithGoogle: (token: string) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   updateProfile: (userData: Partial<User>) => Promise<void>;
@@ -73,7 +72,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         try {
           const response = await axios.get('/api/auth/me');
           setUser(response.data.user);
-        } catch (error) {
+        } catch {
           localStorage.removeItem('token');
           setToken(null);
           delete axios.defaults.headers.common['Authorization'];
@@ -99,30 +98,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(userData);
       
       toast.success('Login successful!');
-    } catch (error: any) {
-      const message = error.response?.data?.message || 'Login failed';
-      toast.error(message);
-      throw error;
-    }
-  };
-
-  const loginWithGoogle = async (googleToken: string) => {
-    try {
-      const response = await axios.post('/api/auth/google', {
-        token: googleToken
-      });
-
-      const { token: newToken, user: userData } = response.data;
-      
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      setUser(userData);
-      
-      toast.success('Google login successful!');
-    } catch (error: any) {
-      const message = error.response?.data?.message || 'Google login failed';
-      toast.error(message);
-      throw error;
+    } catch {
+      toast.error('Login failed');
+      throw new Error('Login failed');
     }
   };
 
@@ -137,8 +115,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(newUser);
       
       toast.success('Registration successful!');
-    } catch (error: any) {
-      const message = error.response?.data?.message || 'Registration failed';
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Registration failed';
       toast.error(message);
       throw error;
     }
@@ -157,8 +135,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await axios.put('/api/auth/profile', userData);
       setUser(response.data.user);
       toast.success('Profile updated successfully!');
-    } catch (error: any) {
-      const message = error.response?.data?.message || 'Profile update failed';
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Profile update failed';
       toast.error(message);
       throw error;
     }
@@ -169,7 +147,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     token,
     loading,
     login,
-    loginWithGoogle,
     register,
     logout,
     updateProfile

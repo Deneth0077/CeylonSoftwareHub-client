@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Shield } from 'lucide-react';
-import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login: React.FC = () => {
@@ -12,7 +11,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -46,11 +45,9 @@ const Login: React.FC = () => {
   const handleGoogleSuccess = async (credentialResponse: any) => {
     console.log('Google OAuth Success:', credentialResponse);
     try {
-      await loginWithGoogle(credentialResponse.credential);
-      navigate(from, { replace: true });
+      // Error is handled in AuthContext
     } catch (error) {
       console.error('Google login error:', error);
-      // Error is handled in AuthContext
     }
   };
 
@@ -152,20 +149,6 @@ const Login: React.FC = () => {
                 Or continue with
               </span>
             </div>
-          </div>
-
-          {/* Google Login Button */}
-          <div className="flex justify-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              useOneTap
-              theme="outline"
-              size="large"
-              text="continue_with"
-              shape="rectangular"
-              width="100%"
-            />
           </div>
 
           <div className="text-center">

@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import { 
   Shield, 
   Download, 
-  Users, 
   Star,
   ArrowRight,
   Zap,
   Lock,
   Headphones
 } from 'lucide-react';
+import webAppImg from '../assets/web app n.jpg';
+import msOfficeImg from '../assets/ms office n.jpg';
+import windowsKeyImg from '../assets/windos  key.jpg';
+import gamesImg from '../assets/games.jpg';
+import crackedImg from '../assets/cracked.jpg';
 
 const Home: React.FC = () => {
   const features = [
@@ -87,55 +91,42 @@ const Home: React.FC = () => {
           <h2 className="mb-10 text-3xl font-bold text-left text-gray-900 md:text-4xl dark:text-white">
             Shop By Categories
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-            {/* Productivity */}
-            <Link to="/products?category=productivity" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/productivity.png" alt="Productivity" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Productivity</div>
-                <div className="text-sm text-gray-500">12 Sub Categories</div>
-              </div>
-            </Link>
-            {/* Development */}
-            <Link to="/products?category=development" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/development.png" alt="Development" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Development</div>
-                <div className="text-sm text-gray-500">15 Sub Categories</div>
-              </div>
-            </Link>
-            {/* Design */}
-            <Link to="/products?category=design" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/design.png" alt="Design" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Design</div>
-                <div className="text-sm text-gray-500">8 Sub Categories</div>
-              </div>
-            </Link>
-            {/* Security */}
-            <Link to="/products?category=security" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/security.png" alt="Security" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Security</div>
-                <div className="text-sm text-gray-500">6 Sub Categories</div>
-              </div>
-            </Link>
-            {/* Games */}
-            <Link to="/products?category=games" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/games.png" alt="Games" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Games</div>
-                <div className="text-sm text-gray-500">10 Sub Categories</div>
-              </div>
-            </Link>
-            {/* Utility */}
-            <Link to="/products?category=utility" className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
-              <img src="/images/categories/utility.png" alt="Utility" className="object-contain mb-4 h-24" />
-              <div className="text-center">
-                <div className="text-lg font-semibold text-gray-900 dark:text-white">Utility</div>
-                <div className="text-sm text-gray-500">7 Sub Categories</div>
-              </div>
-            </Link>
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            {/* Software & Apps */}
+            <div className="flex flex-col items-center">
+              <Link to="/products?category=software%20&%20apps" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <img src={webAppImg} alt="Software & Apps" className="object-cover w-full h-full rounded-2xl" />
+              </Link>
+              <div className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-white">Software & Apps</div>
+            </div>
+            {/* MS Office Keys */}
+            <div className="flex flex-col items-center">
+              <Link to="/products?category=MS%20office%20keys" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <img src={msOfficeImg} alt="MS Office Keys" className="object-cover w-full h-full rounded-2xl" />
+              </Link>
+              <div className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-white">MS Office Keys</div>
+            </div>
+            {/* Windows Keys */}
+            <div className="flex flex-col items-center">
+              <Link to="/products?category=Windows%20Keys" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <img src={windowsKeyImg} alt="Windows Keys" className="object-cover w-full h-full rounded-2xl" />
+              </Link>
+              <div className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-white">Windows Keys</div>
+            </div>
+            {/* PC Games */}
+            <div className="flex flex-col items-center">
+              <Link to="/products?category=PC%20games" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <img src={gamesImg} alt="PC Games" className="object-cover w-full h-full rounded-2xl" />
+              </Link>
+              <div className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-white">PC Games</div>
+            </div>
+            {/* Cracked */}
+            <div className="flex flex-col items-center">
+              <Link to="/products?category=Cracked" className="flex overflow-hidden justify-center items-center w-full aspect-[4/3] bg-gray-50 rounded-2xl shadow transition-all dark:bg-gray-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <img src={crackedImg} alt="Cracked" className="object-cover w-full h-full rounded-2xl" />
+              </Link>
+              <div className="mt-4 text-lg font-semibold text-center text-gray-900 dark:text-white">Cracked</div>
+            </div>
           </div>
         </div>
       </section>
@@ -205,13 +196,13 @@ const Home: React.FC = () => {
           
           <div className="grid gap-8 md:grid-cols-3">
             {[
-              { name: 'Productivity', icon: <Zap className="w-12 h-12" />, count: '150+' },
+              { name: 'Software & Apps', icon: <Zap className="w-12 h-12" />, count: '150+' },
               { name: 'Development', icon: <Shield className="w-12 h-12" />, count: '200+' },
               { name: 'Design', icon: <Star className="w-12 h-12" />, count: '100+' }
             ].map((category, index) => (
               <Link
                 key={index}
-                to={`/products?category=${category.name.toLowerCase()}`}
+                to={`/products?category=${category.name.toLowerCase().replace(/\s+/g, '%20')}`}
                 className="p-8 bg-white rounded-2xl shadow-lg transition-all duration-300 transform group dark:bg-gray-800 hover:shadow-2xl hover:-translate-y-2"
               >
                 <div className="mb-4 text-sky-600 transition-transform duration-300 dark:text-sky-400 group-hover:scale-110">

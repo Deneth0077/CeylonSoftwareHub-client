@@ -64,23 +64,28 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Categories</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/products?category=productivity" className="text-gray-300 hover:text-sky-400 transition-colors">
-                  Productivity
+                <Link to="/products?category=software%20&%20apps" className="text-gray-300 hover:text-sky-400 transition-colors">
+                  Software & Apps
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=development" className="text-gray-300 hover:text-sky-400 transition-colors">
-                  Development
+                <Link to="/products?category=MS%20office%20keys" className="text-gray-300 hover:text-sky-400 transition-colors">
+                  MS Office Keys
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=design" className="text-gray-300 hover:text-sky-400 transition-colors">
-                  Design
+                <Link to="/products?category=Windows%20Keys" className="text-gray-300 hover:text-sky-400 transition-colors">
+                  Windows Keys
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=security" className="text-gray-300 hover:text-sky-400 transition-colors">
-                  Security
+                <Link to="/products?category=PC%20games" className="text-gray-300 hover:text-sky-400 transition-colors">
+                  PC Games
+                </Link>
+              </li>
+              <li>
+                <Link to="/products?category=Cracked" className="text-gray-300 hover:text-sky-400 transition-colors">
+                  Cracked
                 </Link>
               </li>
             </ul>

@@ -57,7 +57,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     name: initialData?.name || '',
     description: initialData?.description || '',
     price: initialData?.price || 0,
-    category: initialData?.category || 'productivity',
+    category: initialData?.category || 'software & apps',
     images: initialData?.images || [{ url: '', alt: '' }],
     downloadUrl: initialData?.downloadUrl || '',
     systemRequirements: {
@@ -87,13 +87,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const categories = [
-    { value: 'productivity', label: 'Productivity' },
-    { value: 'development', label: 'Development' },
-    { value: 'design', label: 'Design' },
-    { value: 'security', label: 'Security' },
-    { value: 'games', label: 'Games' },
-    { value: 'utility', label: 'Utility' },
-    { value: 'other', label: 'Other' }
+    { value: 'software & apps', label: 'Software & Apps' },
+    { value: 'MS office keys', label: 'MS Office Keys' },
+    { value: 'Windows Keys', label: 'Windows Keys' },
+    { value: 'PC games', label: 'PC Games' },
+    { value: 'Cracked', label: 'Cracked' }
   ];
 
   const licenses = [

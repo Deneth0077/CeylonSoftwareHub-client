@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 // IMPORTANT: Set VITE_API_URL in your frontend environment variables to the deployed backend URL (e.g., https://your-backend.onrender.com)
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 15000,
-});
+const baseURL = import.meta.env.VITE_API_URL || '/api';
+if (!baseURL) {
+  throw new Error('VITE_API_URL is not set!');
+}
+const api = axios.create({ baseURL, timeout: 15000 });
 
 // DEBUG: To find your request URI, you can:
 // 1. Open browser DevTools (F12), go to the Network tab, and inspect the Request URL of API calls.

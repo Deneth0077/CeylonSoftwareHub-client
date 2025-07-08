@@ -1,13 +1,3 @@
-// import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
-
-// export default defineConfig({
-//   plugins: [react()],
-//   optimizeDeps: {
-//     exclude: ['lucide-react'],
-//   }
-// });
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -20,8 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ceylon-software-hub-server.vercel.app/'
-        ,
+        target: 'https://ceylon-software-hub-server.vercel.app',
         changeOrigin: true,
       },
     },
@@ -31,3 +20,9 @@ export default defineConfig({
 // http://localhost:5000
 
 // https://ceylon-software-hub-server.vercel.app
+
+// CgVercel.json
+// ,
+//   "env": {
+//     "VITE_API_URL": "https://ceylon-software-hub-server.vercel.app/"
+//   }

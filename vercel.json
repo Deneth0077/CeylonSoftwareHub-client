@@ -11,15 +11,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*\\..*)",
-      "dest": "/$1"
+      "src": "/[^.]+",
+      "dest": "/"
     },
     {
-      "src": "/(.*)",
-      "dest": "/"
+      "src": "/(.*\\..*)",
+      "dest": "/$1"
     }
-  ],
-  "env": {
-    "VITE_API_URL": "https://ceylon-software-hub-server.vercel.app/"
-  }
+  ]
 }

@@ -20,6 +20,6 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "https://ceylon-software-hub-server.vercel.app/api/"
+    "VITE_API_URL": "https://ceylon-software-hub-server.vercel.app/"
   }
 }

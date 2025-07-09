@@ -28,7 +28,8 @@ export default {
           700: '#0f766e',
           800: '#115e59',
           900: '#134e4a',
-        }
+        },
+        light: '#929292', // Custom light mode background color
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -1,45 +1,35 @@
 import axios from 'axios';
 
-// IMPORTANT: Set VITE_API_URL in your frontend environment variables to the deployed backend URL (e.g., https://your-backend.onrender.com)
-const baseURL = import.meta.env.VITE_API_URL || '/api';
+const baseURL = import.meta.env.VITE_API_URL || 'https://ceylon-software-hub-server.vercel.app';
 if (!baseURL) {
   throw new Error('VITE_API_URL is not set!');
 }
 const api = axios.create({ baseURL, timeout: 15000 });
 
-// DEBUG: To find your request URI, you can:
-// 1. Open browser DevTools (F12), go to the Network tab, and inspect the Request URL of API calls.
-// 2. See the console log below, which prints every request's full URL.
-
 api.interceptors.request.use(config => {
-  // This will log the full request URL to the browser console
   const fullUrl = (config.baseURL || '') + (config.url || '');
   console.log('[API DEBUG] Requesting:', fullUrl);
   return config;
 });
 
-// Request interceptor to add auth token
+// Request interceptor for auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    // Only add Authorization header for non-Cloudinary requests
     if (token && !(config.url && config.url.includes('cloudinary.com'))) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
     } else if (config.url && config.url.includes('cloudinary.com')) {
-      // Remove Authorization header if present
       if (config.headers && config.headers.Authorization) {
         delete config.headers.Authorization;
       }
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response interceptor to handle common errors
+// Response interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {

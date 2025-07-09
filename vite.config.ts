@@ -10,8 +10,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ceylon-software-hub-server.vercel.app',
+        target: 'http://localhost:5000', // Backend development URL
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix
       },
     },
   },

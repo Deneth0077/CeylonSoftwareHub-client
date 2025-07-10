@@ -1,9 +1,16 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || 'https://ceylon-software-hub-server.vercel.app';
+// For a two-repository setup, VITE_API_URL must be the full URL of the deployed backend.
+const baseURL = import.meta.env.VITE_API_URL;
+
 if (!baseURL) {
-  throw new Error('VITE_API_URL is not set!');
+  throw new Error(
+    'VITE_API_URL is not set. This is required for the frontend to connect to the backend. ' +
+    'Set it in your .env file for local development, and in Vercel project settings for deployed environments. ' +
+    'It should be the full URL of your backend (e.g., https://your-backend.vercel.app/api).'
+  );
 }
+
 const api = axios.create({ baseURL, timeout: 15000 });
 
 api.interceptors.request.use(config => {
@@ -16,11 +23,15 @@ api.interceptors.request.use(config => {
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    if (token && !(config.url && config.url.includes('cloudinary.com'))) {
+    const isCloudinary = config.url && config.url.includes('cloudinary.com');
+
+    // Only add Authorization header if it's not a Cloudinary request
+    if (token && !isCloudinary) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
-    } else if (config.url && config.url.includes('cloudinary.com')) {
-      if (config.headers && config.headers.Authorization) {
+    } else if (isCloudinary) {
+      // Ensure no Authorization header for Cloudinary
+      if (config.headers?.Authorization) {
         delete config.headers.Authorization;
       }
     }
@@ -34,8 +45,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('token');
+        window.location.href = '/login'; // Consider making this path configurable or using React Router's navigate
+      } else {
+        console.error('localStorage is not available. Cannot redirect on 401.');
+      }
     }
     return Promise.reject(error);
   }

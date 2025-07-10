@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // Backend development URL
+        target: 'https://ceylon-software-hub-server.vercel.app/api', // Backend development URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix
       },
@@ -18,9 +18,9 @@ export default defineConfig({
   },
 });
 
-// http://localhost:5000
+// http://localhost:5000/api
 
-// https://ceylon-software-hub-server.vercel.app
+// https://ceylon-software-hub-server.vercel.app/api
 
 // CgVercel.json
 // ,

@@ -12,7 +12,7 @@ import {
   Plus
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../utils/api';
 
 interface DashboardStats {
   totalUsers: number;
@@ -63,7 +63,7 @@ const AdminDashboard: React.FC = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get('/api/admin/dashboard/stats');
+      const response = await api.get('/api/admin/dashboard/stats');
       setStats(response.data.stats);
       setRecentOrders(response.data.recentOrders);
       setRecentUsers(response.data.recentUsers || []);

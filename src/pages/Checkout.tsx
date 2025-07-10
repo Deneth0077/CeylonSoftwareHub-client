@@ -75,7 +75,7 @@ const Checkout: React.FC = () => {
         customerInfo
       };
 
-      const response = await api.post('/orders', orderData);
+      const response = await api.post('/api/orders', orderData);
       const order = response.data.order;
 
       if (paymentMethod === 'card') {
@@ -124,7 +124,7 @@ const Checkout: React.FC = () => {
       const imageUrl = response.data.secure_url;
       setSlipUrl(imageUrl);
       // Send the Cloudinary URL to the backend
-      await api.post(`/orders/${newOrderId}/payment-slip`, { url: imageUrl });
+      await api.post(`/api/orders/${newOrderId}/payment-slip`, { url: imageUrl });
       toast.success('Payment slip uploaded successfully!');
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to upload payment slip');

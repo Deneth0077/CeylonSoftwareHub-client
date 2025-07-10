@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import api from '../utils/api';
 
 interface User {
   _id: string;
@@ -70,7 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('/api/auth/me');
+          const response = await api.get('/api/auth/me');
           setUser(response.data.user);
         } catch {
           localStorage.removeItem('token');
@@ -86,7 +87,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (emailOrPhone: string, password: string) => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await api.post('/api/auth/login', {
         emailOrPhone,
         password
       });
@@ -106,7 +107,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (userData: RegisterData) => {
     try {
-      const response = await axios.post('/api/auth/register', userData);
+      const response = await api.post('/api/auth/register', userData);
       
       const { token: newToken, user: newUser } = response.data;
       
@@ -132,7 +133,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const updateProfile = async (userData: Partial<User>) => {
     try {
-      const response = await axios.put('/api/auth/profile', userData);
+      const response = await api.put('/api/auth/profile', userData);
       setUser(response.data.user);
       toast.success('Profile updated successfully!');
     } catch (error: unknown) {
